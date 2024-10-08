@@ -1,0 +1,48 @@
+@startuml
+
+interface Observer {
+    +Update(Subject* theChangedSubject)
+}
+
+class Subject {
+    +Attach(Observer* o)
+    +Detach(Observer* o)
+    +Notify()
+    -list<Observer*> _observers
+}
+
+class ClockTimer {
+    +GetHour() : int
+    +GetMinute() : int
+    +GetSecond() : int
+    +Tick()
+    -int m_hours
+    -int m_minutes
+    -int m_seconds
+}
+
+class Widget {
+    +Draw()
+}
+
+class DesktopClock {
+    +Update(Subject* theChangedSubject)
+    +Draw()
+    -ClockTimer* _subject
+}
+
+class BarClock {
+    +Update(Subject* theChangedSubject)
+    +Draw()
+    -ClockTimer* _subject
+}
+
+Subject <|-- ClockTimer
+Observer <|-- DesktopClock
+Observer <|-- BarClock
+Widget <|-- DesktopClock
+Widget <|-- BarClock
+ClockTimer *-- DesktopClock
+ClockTimer *-- BarClock
+
+@enduml
